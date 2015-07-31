@@ -3,7 +3,7 @@ Attribute VB_Name = "Step_4_Summary"
 ' Date Created : January 9, 2015
 ' Created By   : Charmaine Bonifacio
 '---------------------------------------------------------------------
-' Date Edited  : January 10, 2015
+' Date Edited  : March 15, 2015
 ' Edited By    : Charmaine Bonifacio
 ' Comments By  : Charmaine Bonifacio
 '---------------------------------------------------------------------
@@ -65,6 +65,19 @@ ByRef SourceSheet As Worksheet, ByVal VarType As String)
         Range("A1").Offset(0, i).Value = headerArray2(i)
     Next i
     Selection.NumberFormat = "00.000"
+    
+    'Create a separate Column for the new RCM ID with only number - String Format
+    TmpSheet.Activate
+    Call FindLastRowColumn(LR, LC)
+    Debug.Print LR & "-" & LC
+    Columns("B:B").Select
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("B1").Select
+    ActiveCell.FormulaR1C1 = "TID"
+    Range("B2").Select
+    ActiveCell.FormulaR1C1 = "=CLEAN(RIGHT(RC[-1],4))"
+    Range("B2").Select
+    Selection.AutoFill Destination:=Range("B2:B" & LR)
     
     ' Handle Alerts
     Application.DisplayAlerts = True
