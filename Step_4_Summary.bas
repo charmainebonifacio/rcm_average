@@ -3,7 +3,7 @@ Attribute VB_Name = "Step_4_Summary"
 ' Date Created : January 9, 2015
 ' Created By   : Charmaine Bonifacio
 '---------------------------------------------------------------------
-' Date Edited  : March 15, 2015
+' Date Edited  : April 08, 2015
 ' Edited By    : Charmaine Bonifacio
 ' Comments By  : Charmaine Bonifacio
 '---------------------------------------------------------------------
@@ -48,7 +48,7 @@ ByRef SourceSheet As Worksheet, ByVal VarType As String)
     Dim VARS As String
     VARS = UserForm1.VarBox.Text
     ReDim headerArray2(0 To 12)
-    headerArray2(0) = "RCM_ID"
+    headerArray2(0) = headerArray(0)
     headerArray2(1) = VARS & "_01"
     headerArray2(2) = VARS & "_02"
     headerArray2(3) = VARS & "_03"

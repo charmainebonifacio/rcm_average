@@ -5,7 +5,7 @@ Public headerArray2() As String
 ' Date Created : January 9, 2015
 ' Created By   : Charmaine Bonifacio
 '---------------------------------------------------------------------
-' Date Edited  : March 31, 2015
+' Date Edited  : April 07, 2015
 ' Edited By    : Charmaine Bonifacio
 ' Comments By  : Charmaine Bonifacio
 '---------------------------------------------------------------------
@@ -46,20 +46,20 @@ ByRef SourceSheet As Worksheet, ByVal VarType As String)
     VARTOPIVOT = "AVG_" & VarType
     If VarType = "PPT" Then VARTOPIVOT = "SUM_" & VarType
     
-    ReDim headerArray(0 To 1)
-    headerArray(0) = "RCMID"
-    headerArray(1) = "MONTH"
-    
     ' Handle Alerts
     Application.DisplayAlerts = False
     
     ' Workbook Settings
     Set wbSource = ActiveWorkbook
     Set SourceSheet = wbSource.Worksheets(1)
- '   SourceSheet.Name = "ORIG"
+    
+    ' Set Header
+    SourceSheet.Activate
+    ReDim headerArray(0 To 1)
+    headerArray(0) = SourceSheet.Range("A1").Value
+    headerArray(1) = "MONTH"
     
     ' Data Source
-    SourceSheet.Activate
     SourceSheet.Range("A1").Select
     SourceSheet.Range(Selection, Selection.End(xlToRight)).Select
     SourceSheet.Range(Selection, Selection.End(xlDown)).Select
@@ -88,16 +88,10 @@ ByRef SourceSheet As Worksheet, ByVal VarType As String)
         .Orientation = xlColumnField
         .Position = 1
     End With
-    If VarType = "PPT" Then
-        ActiveSheet.PivotTables(pivotTableName).AddDataField ActiveSheet.PivotTables( _
-            pivotTableName).PivotFields(VARTOPIVOT), aveOfElement & VARTOPIVOT, _
-            xlAverage
-    Else
-        ActiveSheet.PivotTables(pivotTableName).AddDataField ActiveSheet.PivotTables( _
-            pivotTableName).PivotFields(VARTOPIVOT), sumOfElement & VARTOPIVOT, _
-            xlSum
-    End If
-    
+    ActiveSheet.PivotTables(pivotTableName).AddDataField ActiveSheet.PivotTables( _
+        pivotTableName).PivotFields(VARTOPIVOT), aveOfElement & VARTOPIVOT, _
+        xlAverage
+
     Dim LR As Long, LC As Long
     Call FindLastRowColumn(LR, LC)
     Debug.Print LR & "-" & LC

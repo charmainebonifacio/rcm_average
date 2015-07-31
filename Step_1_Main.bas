@@ -7,7 +7,7 @@ Public appSTATUS As String
 ' Date Created : January 9, 2015
 ' Created By   : Charmaine Bonifacio
 '---------------------------------------------------------------------------------------
-' Date Edited  : January 10, 2015
+' Date Edited  : April 8, 2015
 ' Edited By    : Charmaine Bonifacio
 ' Comments By  : Charmaine Bonifacio
 '---------------------------------------------------------------------------------------
@@ -45,6 +45,7 @@ Function RCM_MAIN()
     '---------------------------------------------------------------------
     UserSelectedFolder = GetFolder
     Debug.Print UserSelectedFolder
+    If Len(UserSelectedFolder) = 0 Then GoTo Cancel
     MAINFolder = ReturnFolderName(UserSelectedFolder)
     Debug.Print MAINFolder
     
@@ -96,4 +97,7 @@ Function RCM_MAIN()
     Set objFSOlog = Nothing
     
 Cancel:
+    If Len(UserSelectedFolder) = 0 Then
+        MsgBox "No folder selected.", vbOKOnly, SummaryTitle
+    End If
 End Function
