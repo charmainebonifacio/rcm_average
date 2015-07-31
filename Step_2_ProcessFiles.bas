@@ -171,35 +171,34 @@ End Function
 ' Date Created : June 3, 2013
 ' Created By   : Charmaine Bonifacio
 '---------------------------------------------------------------------
-' Date Edited  : June 6, 2013
+' Date Edited  : March 31, 2015
 ' Edited By    : Charmaine Bonifacio
 ' Comments By  : Charmaine Bonifacio
 '---------------------------------------------------------------------
 ' Organization : Department of Geography, University of Lethbridge
 ' Title        : DatabaseFile
-' Description  : This function copies the data from the zonal stats
-'                .dbf file.
-' Parameters   : Worksheet, Worksheet
+' Description  : This function changes the headers
+' Parameters   : Worksheet
 ' Returns      : -
 '---------------------------------------------------------------------
 Function CheckHeaders(DestSht As Worksheet)
 
-    Dim C As String
     Dim D As String
     Dim E As String
+    Dim F As String
     
     DestSht.Activate
-    C = "AVG(PPT)"
-    D = "AVG(Tmax)"
-    E = "AVG(Tmin)"
-    If Range("C1").Value = C Then
-        Range("C1").Value = "AVG_PPT"
-    End If
+    D = "SUM(PPT)"
+    E = "AVG(Tmax)"
+    F = "AVG(Tmin)"
     If Range("D1").Value = D Then
-        Range("D1").Value = "AVG_TMX"
+        Range("D1").Value = "SUM_PPT"
     End If
     If Range("E1").Value = E Then
-        Range("E1").Value = "AVG_TMN"
+        Range("E1").Value = "AVG_TMX"
+    End If
+    If Range("F1").Value = F Then
+        Range("F1").Value = "AVG_TMN"
     End If
     
 End Function

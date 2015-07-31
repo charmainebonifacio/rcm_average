@@ -5,14 +5,15 @@ Public headerArray2() As String
 ' Date Created : January 9, 2015
 ' Created By   : Charmaine Bonifacio
 '---------------------------------------------------------------------
-' Date Edited  : January 10, 2015
+' Date Edited  : March 31, 2015
 ' Edited By    : Charmaine Bonifacio
 ' Comments By  : Charmaine Bonifacio
 '---------------------------------------------------------------------
 ' Organization : Department of Geography, University of Lethbridge
-' Title        : CreatePivotTable
+' Title        : CreatePivotTableTemperature
 ' Description  : This function creates a pivot table for every data
-'                cited on the currently activeworkbook.
+'                cited on the currently activeworkbook. This will be
+'                used in temperature data.
 ' Parameters   : Workbook
 ' Returns      : -
 '---------------------------------------------------------------------
@@ -42,9 +43,9 @@ ByRef SourceSheet As Worksheet, ByVal VarType As String)
     aveOfElement = "Average of "
     
     ' Initialize Variable to be Pivoted
-    Dim VARS As String
-    VARS = UserForm1.VarBox.Text
-    VARTOPIVOT = "AVG_" & VARS
+    VARTOPIVOT = "AVG_" & VarType
+    If VarType = "PPT" Then VARTOPIVOT = "SUM_" & VarType
+    
     ReDim headerArray(0 To 1)
     headerArray(0) = "RCMID"
     headerArray(1) = "MONTH"
@@ -87,9 +88,15 @@ ByRef SourceSheet As Worksheet, ByVal VarType As String)
         .Orientation = xlColumnField
         .Position = 1
     End With
-    ActiveSheet.PivotTables(pivotTableName).AddDataField ActiveSheet.PivotTables( _
-        pivotTableName).PivotFields(VARTOPIVOT), sumOfElement & VARTOPIVOT, _
-        xlSum
+    If VarType = "PPT" Then
+        ActiveSheet.PivotTables(pivotTableName).AddDataField ActiveSheet.PivotTables( _
+            pivotTableName).PivotFields(VARTOPIVOT), aveOfElement & VARTOPIVOT, _
+            xlAverage
+    Else
+        ActiveSheet.PivotTables(pivotTableName).AddDataField ActiveSheet.PivotTables( _
+            pivotTableName).PivotFields(VARTOPIVOT), sumOfElement & VARTOPIVOT, _
+            xlSum
+    End If
     
     Dim LR As Long, LC As Long
     Call FindLastRowColumn(LR, LC)
